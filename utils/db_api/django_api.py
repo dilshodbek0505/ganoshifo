@@ -38,19 +38,18 @@ class Database:
         }
         req = r.post(f"{url}client/", data=data)
         return req.json()
-    
     async def get_member():
         res = r.get(f"{url}member/")
         return res.json() 
-
-    async def  get_lesson():
+    async def get_lesson():
         res = r.get(f"{url}lesson/")
         return res.json()
-    
     async def get_lesson_next(url_1):
         res = r.get(url_1)
         return res.json()
-    
     async def get_one_lesson(pk):
         res = r.get(f"{url}lesson/{pk}/")
         return res.json()
+    async def get_results():
+        req = r.get(f"{url}result/")
+        return req.json()

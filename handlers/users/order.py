@@ -52,7 +52,7 @@ Maxsulot idsi: <b>{user['product_id']['id']}</b>
 # /start tugmasi bosilganda asosiy menuga qaytish
 @dp.message_handler(commands=['start'], state=Register.all_states)
 async def kick_state(msg: types.Message, state: FSMContext):
-    button = await menu_keyboard()
+    button = await menu_keyboard(msg)
     await msg.delete()
     await msg.answer("Bosh menu", reply_markup=button)
     await state.finish()

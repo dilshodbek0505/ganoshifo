@@ -1,6 +1,6 @@
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, Message
 from loader import db
-
+from data.config import ADMINS
 cancel = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton("Bekor qilish🚫")]
@@ -12,6 +12,7 @@ back = ReplyKeyboardMarkup(
         [KeyboardButton("Ortga 🔙")]
     ], resize_keyboard=True
 )
+
 btn = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton("Ha"), KeyboardButton("Yo'q")],
@@ -27,20 +28,28 @@ async def category_keyboard():
     button.insert(KeyboardButton("Ortga 🔙"))
     return button
 
-async def menu_keyboard():
+async def menu_keyboard(msg: Message):
     menu = [
         "Korparatsiya haqidaℹ️",
         "Maxsulotlar🛍",
         "Marketing va imkoniyatlar📚",
-        "Admin bo'lmi👤"
+        "Natijalar 📊"
     ]
-
     button = ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+
+    is_admin =False
+    for admin in ADMINS:
+        if int(admin) == int(msg.chat.id):
+            is_admin=True
+    if is_admin:
+        button.insert(KeyboardButton("Admin bo'lmi👤"))
+
     for item in menu:
         button.insert(
             KeyboardButton(item)
         )
     return button
+
 
 async def product_menu_for_keyboard():
     button = ReplyKeyboardMarkup(row_width=2,resize_keyboard=True, one_time_keyboard=True)

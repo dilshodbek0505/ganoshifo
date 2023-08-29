@@ -1,8 +1,9 @@
 from aiogram import types
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from loader import db, dp, bot
 from states.main_states import Lesson
 from aiogram.dispatcher import FSMContext
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from keyboards.default.keyboards import back
 from .product import kick_state
 
@@ -88,3 +89,22 @@ async def lesson_main_menu(cal: types.CallbackQuery, state: FSMContext):
             text += f"\n{i+1}. {data[i]['name']}"
         await cal.message.answer(text, reply_markup=button)
     await cal.answer(cache_time=0)
+
+
+# # darsliklar ro'yxati
+# async def lessons_button(data):
+#     button = ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
+#     for lesson in data:
+#         button.insert(KeyboardButton(lesson['name']))
+#     button.insert(KeyboardButton(""))
+#     button.insert(KeyboardButton(""))
+#     return button
+
+# # ma'lumot yuborish
+# async def lesson_data(url: None, state: FSMContext):
+#     if url == None:
+#         data = await db.get_lesson()
+#         await state.update_data({
+#             "previous": data['previous'],
+#             "next":  data[]
+#         })

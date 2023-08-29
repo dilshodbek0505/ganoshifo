@@ -9,6 +9,7 @@ from states.main_states import Product, Banner, Company, Lesson
 from .product import product_menu
 from .company import about_company_text
 from .lesson import inline_keyboard, previous_or_next, get_data
+from .results import send_results
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
@@ -16,7 +17,7 @@ async def bot_start(message: types.Message):
     user_name = message.chat.username
     telegram_id = message.chat.id
     await db.set_member(full_name, telegram_id, user_name)
-    menu = await menu_keyboard()
+    menu = await menu_keyboard(msg=message)
     await message.answer(f"Salom, {message.from_user.full_name}!", reply_markup=menu)
 
 @dp.message_handler()
@@ -35,9 +36,11 @@ async def bot_menu(msg: types.Message):
         await msg.answer("Darsliklar bo'limi", reply_markup=back)
         await msg.answer(text, reply_markup=button)
         await Lesson.lessons.set()
+
     elif text == "Korparatsiya haqidaℹ️":
         await about_company_text(msg, state=FSMContext)
         await Company.about.set()
+
     elif text == "Admin bo'lmi👤":
         is_admin = False
         for admin in ADMINS:
@@ -49,7 +52,8 @@ async def bot_menu(msg: types.Message):
         else:
             await msg.answer("Bu menu faqat adminlar uchun")
 
-
+    elif text == "Natijalar 📊":
+        await send_results(msg)
 
 
 

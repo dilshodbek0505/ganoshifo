@@ -67,7 +67,7 @@ async def product_info_fun(cal: types.CallbackQuery, state: FSMContext):
             photo = open(file[0]["file"], 'rb')
         else:
             photo = open('images/image.jpg', 'rb')
-        await cal.message.answer_photo(photo,product[0]['description'], reply_markup=button)
+        await cal.message.answer_photo(photo,product[0]['description'] + "\n"+ "Narxi: "+ str(product[0]['price']) + "so'm", reply_markup=button)
     else:
         await cal.message.answer("Maxsulot topilmadi")
 
@@ -75,7 +75,7 @@ async def product_info_fun(cal: types.CallbackQuery, state: FSMContext):
 # /start kammandasi kelganida bosh menuga o'tish
 @dp.message_handler(commands=['start'], state=Product.all_states)
 async def kick_state(msg: types.Message, state: FSMContext):
-    button = await menu_keyboard()
+    button = await menu_keyboard(msg)
     await msg.answer("Bosh menu", reply_markup=button)
     await state.finish()
 
