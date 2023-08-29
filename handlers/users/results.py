@@ -23,7 +23,6 @@ async def send_results(msg: types.Message):
         if result['file'] != []:
             for i in range(len(result['file'])):
                 is_image = await image_or_video(result['file'][i])
-                print(is_image)
                 file = open(result['file'][i], 'rb')
                 if is_image:
                     if count == 0:

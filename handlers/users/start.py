@@ -42,6 +42,7 @@ async def bot_menu(msg: types.Message):
         await Company.about.set()
 
     elif text == "Admin bo'lmi👤":
+        print(ADMINS)
         is_admin = False
         for admin in ADMINS:
             if int(admin) == int(msg.chat.id):
